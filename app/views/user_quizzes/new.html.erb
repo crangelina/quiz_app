@@ -1,0 +1,20 @@
+<%= form_for @user_quiz, html: {class: "form-assign"} do |f| %>
+<h1>Assign quiz to user</h1>
+
+<div class="field">
+  <%= f.label :quiz_id, "Quiz" %>
+  <%= f.collection_select :quiz_id, @user.quizzes, :id, :name, {prompt: true}, {class: "form-control"} %>
+</div>
+
+<div class="field">
+  <%= f.label :user_id, "Student" %>
+  <%= f.collection_select :user_id, User.students, :id, :full_name, {prompt: true}, {class: "form-control"} %>
+</div>
+
+<div class="actions">
+    <%= f.submit "Submit", class: "btn btn-lg btn-primary btn-block" %>
+  </div>
+
+<% end %>
+
+

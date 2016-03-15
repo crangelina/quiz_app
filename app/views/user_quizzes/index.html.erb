@@ -1,0 +1,31 @@
+<h1>Quizzes</h1>
+
+<ul class="user-quizzes-list list-unstyled">
+  <% @user.user_quizzes.each do |user_quiz| %>
+    <% if user_quiz.status == "not_started" || user_quiz.status == "started" %>
+      <li>
+        <% if user_quiz.status == "not_started" %>
+          <%= link_to raw("<button class='btn btn-primary btn-xs'>Start</button>"), start_user_quiz_path(:id => user_quiz.id), method: :post %>
+        <% end %>
+        <% if user_quiz.status == "started" %>
+          <%= link_to raw("<button class='btn btn-success btn-xs'>Continue</button>"), user_quiz_path(:id => user_quiz.id) %>
+        <% end %>
+        <%= user_quiz.quiz.name %>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+
+
+<ul class="user-quizzes-list-completed list-unstyled">
+  <h2><small>Completed</small></h2>
+  <% @user.user_quizzes.each do |user_quiz| %>
+    <% if user_quiz.status == "completed" %>
+
+      <li>
+        <button class='btn btn-inverse btn-xs' disabled="disabled">Complete</button>
+        <%= user_quiz.quiz.name %>
+      </li>
+      <% end %>
+      <% end %>
+</ul>

@@ -1,0 +1,36 @@
+<%= form_for @quiz, html: {class: "form-new-quiz"} do |f| %>
+
+<h1 class="form-heading">New quiz</h1>
+
+  <div class="field">
+    <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "Name" %>
+  </div>
+
+  <div class="field">
+    <%= f.text_area :instructions, class: "form-control", placeholder: "Instructions" %>
+  </div>
+
+  <h1 class="form-heading"> <small>Questions </small></h1>
+  <%= f.fields_for :questions do |ff| %>
+    <div class="field">
+      <%= ff.text_field :name, class: "form-control", placeholder: "Name" %>
+    </div>
+    <div class="field">
+      <%= ff.text_field :expected_answer, class: "form-control", placeholder: "Answer" %>
+    </div>
+    <div class="field">
+      <%= ff.text_area :instructions, class: "form-control", placeholder: "Instructions" %>
+    </div>
+  <% end %>
+
+  <div class="more-questions-wrapper"></div>
+
+  <button class="more-questions-btn btn btn-default" type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Question</button>
+
+  <div class="actions">
+    <%= f.submit "Submit", class: "btn btn-lg btn-primary btn-block" %>
+  </div>
+
+<% end %>
+
+

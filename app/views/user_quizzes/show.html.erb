@@ -1,0 +1,27 @@
+<%= form_for @user_quiz, html: {class: "form-user-quiz"} do |f| %>
+   <h1><%= @user_quiz.quiz.name %></h1>
+   <h1><small><%= Markdown.render(@user_quiz.quiz.instructions).html_safe %></small></h1>
+
+  <ul class="quiz-questions-list list-unstyled">
+   
+      <%= f.fields_for :answers do |ff| %>
+        <% answer = ff.object %>
+          <li>
+            <div class="field">
+              <%= ff.label :value, "#{answer.question.name}" %> 
+                <p> <%= Markdown.render(answer.question.instructions).html_safe %> </p>
+                <%= ff.text_area :value, class: "form-control", placeholder: "Answer" %>
+            </div>
+            <%= ff.hidden_field(:question_id, value: answer.question.id ) %>
+          </li>
+        <% end %>
+    
+      
+  </ul>
+
+  <div class="actions">
+    <%= f.submit "Save", class: "btn btn-lg btn-primary btn-block" %>
+    <%= f.submit "Complete", class: "btn btn-lg btn-success btn-block", value: "Complete" %>
+  </div>
+
+<% end %>

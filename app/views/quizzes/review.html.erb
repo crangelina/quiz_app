@@ -1,0 +1,62 @@
+<%= form_for @user_quiz, url: grade_user_quiz_path(@user_quiz), method: :PUT do |f| %>
+
+  <h1>
+    <%= @user_quiz.quiz.name %> <small><%= @user_quiz.user.full_name %></small>
+  </h1>
+
+  <ul class="review-list list-unstyled">
+    <% @user_quiz.quiz.questions.each_with_index do |question, index| %>
+
+      <li>
+        <h1><small><%= question.name %></small></h1>
+
+        <div class="row">
+
+          <div class="col-sm-5">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Expected Answer:</h3>
+              </div> 
+              <div class="panel-body"><%= question.expected_answer %></div>
+            </div>
+          </div>
+        
+          <% student_answer = @user_quiz.answers.find_by(question_id: question.id) %>
+          <div class="col-sm-5">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Student Answer:</h3>
+              </div> 
+              <div class="panel-body"><%= student_answer.value %></div>
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+            <div class="correct-wrapper btn-group" data-toggle="buttons">
+
+              <label class="correct btn btn-default <%= 'active' if student_answer.is_correct == true %>">
+                
+                <%= f.fields_for :answers, student_answer do |ff| %>
+                  <%= ff.check_box :is_correct, {}, true, false %>
+                  <%= ff.hidden_field :id %>
+                <% end %>
+ 
+
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 
+              </label>
+
+            </div>
+          </div>
+
+        </div>
+        
+      </li>
+
+    <% end %>
+  </ul>
+
+
+  <button type="submit" class="review-submit-button btn btn-lg btn-primary btn-block">Submit</button>
+
+<% end %>
+
