@@ -27,7 +27,7 @@
 
       <li>
         <button class='btn btn-inverse btn-xs' disabled="disabled">Complete</button>
-        <% totalCorrectAnswers = user_quiz.answers.where(is_correct: true) %>
+        <% totalCorrectAnswers = user_quiz.answers.where(is_correct: true).length %>
         <% totalAnswers = user_quiz.answers.length %>
         <%= user_quiz.quiz.name %> | Grade: <%= totalCorrectAnswers %> / <%= totalAnswers %>
 
