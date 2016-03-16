@@ -18,13 +18,19 @@
 
 
 <ul class="user-quizzes-list-completed list-unstyled">
-  <h2><small>Completed</small></h2>
+  <% anyComplete = @user.user_quizzes.where(status: "completed") %>
+  <% if anyComplete.length > 0 %>
+    <h2><small>Completed</small></h2>
+  <% end %>
   <% @user.user_quizzes.each do |user_quiz| %>
     <% if user_quiz.status == "completed" %>
 
       <li>
         <button class='btn btn-inverse btn-xs' disabled="disabled">Complete</button>
-        <%= user_quiz.quiz.name %>
+        <% totalCorrectAnswers = user_quiz.answers.where(is_correct: true) %>
+        <% totalAnswers = user_quiz.answers.length %>
+        <%= user_quiz.quiz.name %> | Grade: <%= totalCorrectAnswers %> / <%= totalAnswers %>
+
       </li>
       <% end %>
       <% end %>
