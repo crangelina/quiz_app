@@ -26,10 +26,12 @@
     <% if user_quiz.status == "completed" %>
 
       <li>
-        <button class='btn btn-inverse btn-xs' disabled="disabled">Complete</button>
-        <% totalCorrectAnswers = user_quiz.answers.where(is_correct: true).length %>
-        <% totalAnswers = user_quiz.answers.length %>
-        <%= user_quiz.quiz.name %> | Grade: <%= totalCorrectAnswers %> / <%= totalAnswers %>
+        <% if user_quiz.grade != nil %>
+          <button class='btn btn-success btn-xs'><%= user_quiz.grade %></button>
+        <% else %>
+          <button class='btn btn-inverse btn-xs' disabled="disabled">Complete</button>
+        <% end %>
+        <%= user_quiz.quiz.name %> 
 
       </li>
       <% end %>

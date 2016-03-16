@@ -57,9 +57,12 @@ class UserQuizzesController < ApplicationController
   def grade
     @user_quiz = UserQuiz.find(params[:id])
     if @user_quiz.update_attributes(user_quiz_params)
-      p "-" * 50
-      pp params
-      p "-" * 50
+      # setting grade column on user_quiz
+      totalCorrectAnswers = @user_quiz.answers.where(is_correct: true).length
+      totalAnswers = @user_quiz.answers.length
+      grade = "#{totalCorrectAnswers} / #{totalAnswers}"
+      @user_quiz.grade = grade
+      @user_quiz.save
       flash[:notice] = "The quiz was successfully graded."
       redirect_to controller: "quizzes", action: "index"
     else
