@@ -103,7 +103,23 @@ body {
     }
   }
   .questions-template-wrapper {
-    margin: 15px 0;
+    border-top: 1px solid #D2D2D2;
+    padding-top: 30px;
+    margin: 30px 0 15px 0;
+    div.edit-questions-wrapper:first-child {
+      border: none;
+    }
+  }
+}
+
+.edit-quiz div.edit-questions-wrapper {
+  border-top: 1px solid #D2D2D2;
+  padding-top: 30px;
+  margin: 30px 0 15px 0;
+  &:first-child {
+    border: none;
+    padding-top: 0;
+    margin: 0;
   }
 }
 
@@ -188,6 +204,30 @@ body {
   textarea {
     margin-bottom: 5px;
   }
+}
+
+
+
+// Quizzes#new
+
+.answer-fields {
+  margin: 5px 0;
+  select {
+    width: 49%;
+    display: inline-block;
+  }
+}
+
+.placeholder-code,
+.expected-answer {
+  display: none;
+  margin-bottom: 5px;
+}
+
+.placeholder-code,
+.expected-answer,
+.answer-fields {
+  color: #6B6B6B;
 }
 
 
@@ -278,6 +318,9 @@ body {
 // User_quizzes#show
 
 .quiz-questions-list {
+  li {
+    margin: 50px 0;
+  }
   h1 {
     margin-bottom: 20px;
   }
@@ -332,6 +375,29 @@ body {
     }
   }
 }
+
+.student-review {
+  .correct:hover,
+  .corrent:active {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+  }
+  .correct:hover,
+  .btn {
+    cursor: default;
+  }
+}
+
+
+// ACE
+
+.editor { 
+        height: 200px;
+        border: 1px solid #DADADA;
+        border-radius: 4px;
+    }
+
 
 
 

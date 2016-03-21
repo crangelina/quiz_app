@@ -9,8 +9,21 @@
           <li>
             <div class="field">
               <%= ff.label :value, "#{answer.question.name}" %> 
-                <p> <%= Markdown.render(answer.question.instructions).html_safe %> </p>
-                <%= ff.text_area :value, class: "form-control", placeholder: "Answer" %>
+                <%= Markdown.render(answer.question.instructions).html_safe %>
+                <% if ff.object.question.answer_type == "Code" %>
+                  <%= ff.hidden_field :value, class: "form-control hidden-answer-value-field" %>
+                <% else %>
+                  <%= ff.text_area :value, class: "form-control" %>
+                <% end %>
+
+                <!-- ACE -->
+
+                <% if answer.question.answer_type == "Code" %>
+                  <div class="editor" data-language="<%= ff.object.question.answer_language %>"><%= answer.question.placeholder_code %></div>
+                <% end %>
+                
+                <!-- /ACE -->
+
             </div>
             <%= ff.hidden_field(:question_id, value: answer.question.id ) %>
           </li>

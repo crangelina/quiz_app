@@ -1,50 +1,71 @@
 <%= form_for @user_quiz, url: grade_user_quiz_path(@user_quiz), method: :PUT do |f| %>
 
   <h1>
-    <%= @user_quiz.quiz.name %> <small><%= @user_quiz.user.full_name %></small>
+    <%= @user_quiz.quiz.name %> 
+    <% if @user.role == 'teacher' %>
+    <small><%= @user_quiz.user.full_name %></small>
+    <% end %>
   </h1>
 
   <ul class="review-list list-unstyled">
     <% @user_quiz.quiz.questions.each_with_index do |question, index| %>
+    <% student_answer = @user_quiz.answers.find_by(question_id: question.id) %>
 
       <li>
         <h1><small><%= question.name %></small></h1>
 
         <div class="row">
+          <% if question.expected_answer == "" %>
+            <div class="col-sm-10">
+          <% else %>
+            <div class="col-sm-5">
+          <% end %>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title"><%= @user.role == 'student' ? 'Your' : 'Student' %> Answer:</h3>
+              </div> 
+              <% if student_answer.question.answer_type == "Text" %>
+                <div class="panel-body"><%= student_answer.value %></div>
+              <% else %>
+                <div class="editor review-editor"><%= student_answer.value %></div>
+              <% end %>
+            </div>
+          </div>
 
-          <div class="col-sm-5">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Expected Answer:</h3>
-              </div> 
-              <div class="panel-body"><%= question.expected_answer %></div>
+          <% if question.expected_answer != "" %>
+            <div class="col-sm-5">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Expected Answer:</h3>
+                </div> 
+                <% if question.answer_type == "Text" %>
+                  <div class="panel-body"><%= question.expected_answer %></div>
+                <% else %>
+                  <div class="editor review-editor"><%= question.expected_answer %></div>
+                <% end %>
+              </div>
             </div>
-          </div>
-        
-          <% student_answer = @user_quiz.answers.find_by(question_id: question.id) %>
-          <div class="col-sm-5">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Student Answer:</h3>
-              </div> 
-              <div class="panel-body"><%= student_answer.value %></div>
-            </div>
-          </div>
+          <% end %>
 
           <div class="col-sm-2">
             <div class="correct-wrapper btn-group" data-toggle="buttons">
-
+              <% if @user.role == "student" %>
+                <div class="student-review">
+                  <% end %>
               <label class="correct btn btn-default <%= 'active' if student_answer.is_correct == true %>">
-                
-                <%= f.fields_for :answers, student_answer do |ff| %>
-                  <%= ff.check_box :is_correct, {}, true, false %>
-                  <%= ff.hidden_field :id %>
+                <% if @user.role == "teacher" %>
+                  <%= f.fields_for :answers, student_answer do |ff| %>
+                    <%= ff.check_box :is_correct, {}, true, false %>
+                    <%= ff.hidden_field :id %>
+                  <% end %>
                 <% end %>
  
 
                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 
               </label>
-
+              <% if @user.role == "student" %>
+                </div>
+              <% end %>
             </div>
           </div>
 
@@ -55,8 +76,9 @@
     <% end %>
   </ul>
 
-
-  <button type="submit" class="review-submit-button btn btn-lg btn-primary btn-block">Submit</button>
+  <% if @user.role == "teacher" %>
+    <button type="submit" class="review-submit-button btn btn-lg btn-primary btn-block">Submit</button>
+  <% end %>
 
 <% end %>
 

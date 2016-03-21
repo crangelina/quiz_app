@@ -1,11 +1,34 @@
 <div class="questions-template-wrapper">
   <div class="field">
-    <input class="form-control" placeholder="Name" type="text" name="quiz[questions_attributes][<%= index %>][name]" id="quiz_questions_attributes_<%= index %>_name">
+    <input class="form-control" placeholder="Question" type="text" name="quiz[questions_attributes][<%= index %>][name]" id="quiz_questions_attributes_<%= index %>_name">
   </div>
-  <div class="field">
-    <input class="form-control" placeholder="Answer" type="text" name="quiz[questions_attributes][<%= index %>][expected_answer]" id="quiz_questions_attributes_<%= index %>_expected_answer">
-  </div>
+
   <div class="field">
     <textarea class="form-control" placeholder="Instructions" name="quiz[questions_attributes][<%= index %>][instructions]" id="quiz_questions_attributes_<%= index %>_instructions"></textarea>
   </div>
+
+  <div class="field answer-fields">
+    <label for="quiz_questions_attributes_<%= index %>_answer_type">Answer type</label><br>
+    <select class="answer-type-added form-control" name="quiz[questions_attributes][<%= index %>][answer_type]" id="quiz_questions_attributes_<%= index %>_answer_type">
+    <option value="Text">Text</option>
+    <option value="Code">Code</option></select>
+  
+    <select class="language-type-added-<%= index %> form-control pull-right" name="quiz[questions_attributes][<%= index %>][answer_language]" id="quiz_questions_attributes_<%= index %>_answer_language">
+    <option value="JavaScript">JavaScript</option>
+    <option value="Ruby">Ruby</option></select>
+  </div>
+   <div class="field placeholder-code">
+      <label for="quiz_questions_attributes_<%= index %>_placeholder_code">Placeholder code</label>
+      <input type="hidden" name="quiz[questions_attributes][<%= index %>][placeholder_code]" class= "hidden-placeholder-code-field" id="quiz_questions_attributes_<%= index %>_placeholder_code">
+      <div class="editor placeholder-code-editor"></div>
+  </div>
+  <div class="field real-expected-answer-input">
+    <input class="form-control" placeholder="Expected answer" type="text" name="quiz[questions_attributes][<%= index %>][expected_answer]" id="quiz_questions_attributes_<%= index %>_expected_answer">
+  </div>
+  <div class="field expected-answer">
+    <label for="quiz_questions_attributes_<%= index %>_expected_answer">Expected answer</label>
+    <div class="editor expected-answer-editor"></div>
+  </div>
 </div>
+
+

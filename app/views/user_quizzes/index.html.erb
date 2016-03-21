@@ -5,10 +5,10 @@
     <% if user_quiz.status == "not_started" || user_quiz.status == "started" %>
       <li>
         <% if user_quiz.status == "not_started" %>
-          <%= link_to raw("<button class='btn btn-primary btn-xs'>Start</button>"), start_user_quiz_path(:id => user_quiz.id), method: :post %>
+          <%= link_to raw("<button class='btn btn-primary btn-xs'>Start</button>"), start_user_quiz_path(id: user_quiz.id), method: :post %>
         <% end %>
         <% if user_quiz.status == "started" %>
-          <%= link_to raw("<button class='btn btn-success btn-xs'>Continue</button>"), user_quiz_path(:id => user_quiz.id) %>
+          <%= link_to raw("<button class='btn btn-success btn-xs'>Continue</button>"), user_quiz_path(id: user_quiz.id) %>
         <% end %>
         <%= user_quiz.quiz.name %>
       </li>
@@ -27,7 +27,7 @@
 
       <li>
         <% if user_quiz.grade != nil %>
-          <button class='btn btn-success btn-xs'><%= user_quiz.grade %></button>
+          <%= link_to raw("<button class='btn btn-success btn-xs'>#{user_quiz.grade}</button>"), review_quiz_path(id: user_quiz.id) %>
         <% else %>
           <button class='btn btn-inverse btn-xs' disabled="disabled">Complete</button>
         <% end %>

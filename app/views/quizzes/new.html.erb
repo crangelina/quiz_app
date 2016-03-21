@@ -10,16 +10,30 @@
     <%= f.text_area :instructions, class: "form-control", placeholder: "Instructions" %>
   </div>
 
-  <h1 class="form-heading"> <small>Questions </small></h1>
+  <h1 class="form-heading"> <small>Questions</small></h1>
   <%= f.fields_for :questions do |ff| %>
     <div class="field">
-      <%= ff.text_field :name, class: "form-control", placeholder: "Name" %>
-    </div>
-    <div class="field">
-      <%= ff.text_field :expected_answer, class: "form-control", placeholder: "Answer" %>
+      <%= ff.text_field :name, class: "form-control", placeholder: "Question" %>
     </div>
     <div class="field">
       <%= ff.text_area :instructions, class: "form-control", placeholder: "Instructions" %>
+    </div>
+    <div class="field answer-fields">
+      <%= ff.label :answer_type %><br>
+      <%= ff.select :answer_type, @answer_types, {}, {class: "answer-type form-control" } %>
+      <%= ff.select :answer_language, @answer_languages, {prompt: ""}, {class: "language-type form-control pull-right", disabled: true}%>
+    </div>
+    <div class="field placeholder-code">
+      <%= ff.label :placeholder_code %>
+      <%= ff.hidden_field :placeholder_code, class: "hidden-placeholder-code-field" %>
+      <div class="editor placeholder-code-editor" data-language=""></div>
+    </div>
+    <div class="field real-expected-answer-input">
+      <%= ff.text_field :expected_answer, class: "form-control", placeholder: "Expected answer" %>
+    </div>
+    <div class="field expected-answer">
+      <%= ff.label :expected_answer %>
+      <div class="editor expected-answer-editor"></div>
     </div>
   <% end %>
 

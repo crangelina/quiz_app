@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160316150141) do
+ActiveRecord::Schema.define(version: 20160320004959) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "user_quiz_id"
@@ -30,8 +30,11 @@ ActiveRecord::Schema.define(version: 20160316150141) do
     t.string   "expected_answer"
     t.text     "instructions"
     t.integer  "quiz_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "answer_type"
+    t.string   "answer_language"
+    t.text     "placeholder_code"
   end
 
   add_index "questions", ["quiz_id"], name: "index_questions_on_quiz_id"
