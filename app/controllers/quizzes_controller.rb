@@ -1,7 +1,5 @@
 class QuizzesController < ApplicationController
 
-  require "pp"
-
   before_filter :require_teacher,          except: [:review]
   before_filter :set_quiz,                 only: [:show, :update, :destroy]
   before_filter :set_answer_type_language, only: [:new, :show]
@@ -29,13 +27,10 @@ class QuizzesController < ApplicationController
   def create
     @quiz = @user.quizzes.new(quiz_params)
     if @quiz.save
-      p "-" * 30
-      pp params
-      p "-" * 30
       flash[:notice] = "The quiz was successfully created."
       redirect_to action: "index"
     else
-      flash.now[:notice] = "The quiz could not be created. Please provide a name for the quiz."
+      flash.now[:notice] = "The quiz could not be created."
       render action: "new"
     end
   end

@@ -1,58 +1,64 @@
-
 <%= form_for @quiz, html: {class: "form-new-quiz"} do |f| %>
 
-<h1 class="form-heading"><%= @quiz.name %></h1>
+  <h1 class="form-heading"><%= @quiz.name %></h1>
 
+  <!-- quiz name -->
   <div class="field">
     <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "Name" %>
   </div>
 
+  <!-- quiz instructions -->
   <div class="field">
     <%= f.text_area :instructions, class: "form-control", placeholder: "Instructions" %>
   </div>
 
+  <!-- questions -->
   <h1 class="form-heading"> <small>Questions </small></h1>
-  
   <div class = "edit-quiz" %>
     <%= f.fields_for :questions do |ff| %>
-    <div class = "edit-questions-wrapper" >
-      <% question = ff.object %>
-      <div class="field">
-        <%= ff.text_field :name, class: "form-control", placeholder: "Question" %>
+      <div class = "edit-questions-wrapper" >
+        <% question = ff.object %>
+        <!-- name -->
+        <div class="field">
+          <%= ff.text_field :name, class: "form-control", placeholder: "Question" %>
+        </div>
+        <!-- instructions -->
+        <div class="field">
+          <%= ff.text_area :instructions, class: "form-control mde", placeholder: "Instructions" %>
+        </div>
+        <!-- answer type/language -->
+        <div class="field answer-fields">
+          <%= ff.label :answer_type %><br>
+          <%= ff.select :answer_type, @answer_types, {}, {class: "answer-type form-control" } %>
+          <%= ff.select :answer_language, @answer_languages, {prompt: ""}, {class: "language-type form-control pull-right", disabled: (question.answer_type == "Text") }%>
+        </div>
+        <!-- placeholder code -->
+        <div class="field placeholder-code" <%= 'style=display:block' if question.answer_type == "Code" %> >
+          <%= ff.label :placeholder_code %>
+          <%= ff.hidden_field :placeholder_code, class: "hidden-placeholder-code-field" %>
+          <div class="editor placeholder-code-editor" data-language=""><%= question.placeholder_code %></div>
+        </div>
+        <!-- expected answer -->
+        <div class="field real-expected-answer-input">
+          <% if question.answer_type == "Text" %>
+            <%= ff.text_field :expected_answer, class: "form-control", placeholder: "Expected answer" %>
+          <% else %>
+            <%= ff.hidden_field :expected_answer, class: "form-control", placeholder: "Expected answer" %>
+          <% end %>
+        </div>
+        <div class="field expected-answer <%= 'notHidden' if question.answer_type == 'Code' %>" <%= 'style=display:block' if question.answer_type == "Code" %> >
+          <%= ff.label :expected_answer %>
+          <div class="editor expected-answer-editor"><%= question.expected_answer %></div>
+        </div>
       </div>
-      <div class="field">
-        <%= ff.text_area :instructions, class: "form-control", placeholder: "Instructions" %>
-      </div>
-      <div class="field answer-fields">
-        <%= ff.label :answer_type %><br>
-        <%= ff.select :answer_type, @answer_types, {}, {class: "answer-type form-control" } %>
-        <%= ff.select :answer_language, @answer_languages, {prompt: ""}, {class: "language-type form-control pull-right", disabled: (question.answer_type == "Text") }%>
-      </div>
-      <div class="field placeholder-code" <%= 'style=display:block' if question.answer_type == "Code" %> >
-        <%= ff.label :placeholder_code %>
-        <%= ff.hidden_field :placeholder_code, class: "hidden-placeholder-code-field" %>
-        <div class="editor placeholder-code-editor" data-language=""><%= question.placeholder_code %></div>
-      </div>
-      <div class="field real-expected-answer-input">
-        <% if question.answer_type == "Text" %>
-          <%= ff.text_field :expected_answer, class: "form-control", placeholder: "Expected answer" %>
-        <% else %>
-          <%= ff.hidden_field :expected_answer, class: "form-control", placeholder: "Expected answer" %>
-        <% end %>
-      </div>
-      <div class="field expected-answer <%= 'notHidden' if question.answer_type == 'Code' %>" <%= 'style=display:block' if question.answer_type == "Code" %> >
-        <%= ff.label :expected_answer %>
-        <div class="editor expected-answer-editor"><%= question.expected_answer %></div>
-      </div>
-    </div>
     <% end %>
   </div>
 
-
+  <!-- questions added with js -->
   <div class="more-questions-wrapper"></div>
-
   <button class="more-questions-btn btn btn-default" type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Question</button>
 
+  <!-- submit -->
   <div class="actions">
     <%= f.submit "Submit", class: "btn btn-lg btn-primary btn-block" %>
   </div>

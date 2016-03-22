@@ -17,6 +17,7 @@
 //= require mode-javascript
 //= require mode-ruby
 //= require theme-tomorrow
+//= require simplemde.min.js
 //= require_tree 
 
 
@@ -69,6 +70,9 @@ $(function() {
     var expectedAnswerEditor = $html.find('.editor').get(1);
     createEditor(placeholderCodeEditor);
     createEditor(expectedAnswerEditor);
+    $html.find('.mde').each(function(i, el) {
+      new SimpleMDE({ element: el });
+    });
     questionsIndex++;
   });
 
@@ -138,7 +142,11 @@ $(function() {
     })
   })
 
-  //------ TEACHER EDITING QUIZ ------
+  //------ simpleMDE ---------
+
+  $('.mde').each(function(i, el) {
+    new SimpleMDE({ element: el });
+  });
 
 
 

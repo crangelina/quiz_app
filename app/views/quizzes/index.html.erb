@@ -1,6 +1,5 @@
 <h1>Quizzes</h1>
 
-
 <ul class="quizzes-index-list list-unstyled">
   <% @quizzes.each do |quiz| %>
     <li>
@@ -10,7 +9,6 @@
       <div class="delete-button">
         <%= link_to raw("<span class='glyphicon glyphicon-remove-circle' aria-hidden='true'></span>"), quiz_path(quiz.id), method: :delete , data: {confirm: "Are you sure?"} %>
       </div>
-      
       <ul class="quizzes-index-list-users list-unstyled">
         <% quiz.user_quizzes.each do |user_quiz| %>
           <li>
