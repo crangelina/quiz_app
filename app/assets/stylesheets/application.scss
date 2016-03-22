@@ -11,12 +11,14 @@
  * file per style scope.
  *
 
+  *= require simplemde.min.css
+
  */
 
 
  @import "bootstrap-sprockets";
  @import "bootstrap";
- @import "simplemde.min.css";
+
 
 
  $grey: #7f8c8d;
